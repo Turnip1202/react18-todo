@@ -14,7 +14,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
 
   // 主题切换（黑/白）
   const THEME_KEY = 'ui:theme';
-  const [themeMode, setThemeMode] = useState<'dark'|'light'>(() => (localStorage.getItem(THEME_KEY) as 'dark'|'light') || 'dark');
+  const [themeMode, setThemeMode] = useState<'dark'|'light'>(() => (localStorage.getItem(THEME_KEY) as 'dark'|'light') || 'light');
   useEffect(() => { localStorage.setItem(THEME_KEY, themeMode); }, [themeMode]);
   const themeConfig = useMemo(() => ({ algorithm: themeMode === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm }), [themeMode]);
 
