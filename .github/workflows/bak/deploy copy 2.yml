@@ -1,0 +1,42 @@
+# .github/workflows/deploy.yml
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - source  # 从 source 分支构建
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.14.4
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build
+
+      - name: Deploy to master branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: master  # 部署到 master 分支
+          commit_message: "Deploy: ${{ github.event.head_commit.message }}"
+          enable_jekyll: false
+          user_name: 'Turnip1202'
+          user_email: 'turnip1202@outlook.com'  # 替换为你的邮箱
