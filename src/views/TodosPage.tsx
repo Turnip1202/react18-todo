@@ -134,7 +134,7 @@ const TodosPage: React.FC = () => {
               <Form.Item name="priority" label={t('priority')} initialValue={'normal'}>
                 <Select style={{ width: 160 }} options={[{ value:'low', label:t('priority_low') },{ value:'normal', label:t('priority_normal') },{ value:'high', label:t('priority_high') }]} />
               </Form.Item>
-              <Form.Item name="dueDate" label={t('due_date')}>
+              <Form.Item name="dueDate" label={t('due_date')} initialValue={dayjs()}>
                 <DatePicker />
               </Form.Item>
               <Form.Item name="tags" label={t('tags')}>

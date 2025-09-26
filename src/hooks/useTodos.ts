@@ -10,7 +10,16 @@ import { createStorageAdapter } from '../storage';
  * - 使用 BroadcastChannel 实现跨标签同步
  */
 export function useTodos(initialSettings?: Partial<Settings>) {
-  const settings = useMemo<Settings>(() => ({ ...DEFAULT_SETTINGS, ...initialSettings }), [initialSettings]);
+ const savedAdapter = localStorage.getItem('todosAdapter');
+ console.log("savedAdapter", savedAdapter)
+
+  const settings = useMemo<Settings>(() => ({ 
+    ...DEFAULT_SETTINGS, 
+    ...initialSettings,
+    // 如果有保存的适配器，使用保存的值覆盖
+    adapter: savedAdapter ? (savedAdapter as AdapterKind) : initialSettings?.adapter || DEFAULT_SETTINGS.adapter
+  }), [initialSettings, savedAdapter]);
+
 
   const adapterRef = useRef(createStorageAdapter(settings.adapter));
   const [loading, setLoading] = useState(true);
@@ -60,6 +69,10 @@ export function useTodos(initialSettings?: Partial<Settings>) {
   // 切换适配器
   const switchAdapter = useCallback(async (kind: AdapterKind) => {
     if (kind === adapterRef.current.name) return;
+
+    // 保存选择的适配器类型
+    localStorage.setItem('todosAdapter', kind);
+
     const next = createStorageAdapter(kind);
     await next.init();
     const currentAll = await adapterRef.current.getAll();
