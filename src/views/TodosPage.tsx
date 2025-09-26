@@ -138,7 +138,7 @@ const TodosPage: React.FC = () => {
                 <DatePicker />
               </Form.Item>
               <Form.Item name="tags" label={t('tags')}>
-                <Select mode="tags" tokenSeparators={[',',' ']} placeholder="tags" style={{ minWidth: 220 }} />
+                <Select mode="tags" tokenSeparators={[',',' ']} placeholder={t('tags')} style={{ minWidth: 220 }} />
               </Form.Item>
               <Form.Item name="description" label={t('description')} style={{ minWidth: 320 }}>
                 <Input.TextArea rows={2} />
