@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
     element: withLayout(<SettingsPage />),
   },
 ],{
-  basename:"/react18-todo"
+  basename:"/react18-todo/"
 });
 
 export default router;
